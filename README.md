@@ -151,7 +151,85 @@ All data will be obtained in 2 types, namely, the selected variable data to be a
 <p align="left">
  
 
-  <img  width="1000"  src="https://user-images.githubusercontent.com/63940535/132388256-b55ef9af-7bf7-46cf-99b3-ac5f2ed41adf.png">
+  <img  width="1000"  src="https://user-images.githubusercontent.com/63940535/132388661-749a4f47-dfca-490b-a215-151d1b2a342f.png">
   
 </p>
+
+ 
+ Quantitative variables compare the data by choosing the mean and median of the data replacing blanks and changing the variables to Category. After selecting the variables, all 28 selected variables are obtained as follows: CLAIM3YEARS , P1_EMP_STATUS . , P1_PT_EMP_STATUS, AD_BUILDINGS, SUM_INSURED_BUILDINGS, SUM_INSURED_CONTENTS, CONTENTS_COVER, SPEC_SUM_INSURED, SPEC_ITEM_PREM, P1_MAR_STATUS, P1_SEX, APPR_LOCKS, MAX_DAYS_UNOCC, SEC_DISC_REQ, PAYMENT_METHOD, LEGAL_ADDON_PRE_REN, LEGAL_ADDON_POST_REN, HOME_EM_ADDON_PRE_REN, HOME_EM_ADDON_POST_REN, GARDEN_ADDON_PRE_REN, GARDEN_ADDON_POST_REN, KEYCARE_ADDON_PRE_REN, KEYCARE_ADDON_POST_REN, HP2_ADDON_PRE_REN, HP2_ADDON_POST_REN, MTA_FAP, MTA_APRP. , LAST_ANN_PREM_GROSS All prepared data were then used to make predictions from the selected variables.
+
+
+## III.Result
+
+| **Model**            | **Accuracy (%)**      | **Precision (%)**        |**Recall (%)**     |**Specificity (%)**       |**F1-score (%)**       |**RANK**       |
+| -----------          | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
+| Logistic Regression (LR)             | 69 | 93 | 70 | 40 | 80 | 7 |
+| K-nearest Neighbors (KNN)            | 66 | 100| 61 | 0 | 76 | 10 |
+| Support Vector Machine (Gaussian)    | 70 | 70 | 97 | 30 | 81 | 2 |
+| Support Vector Machine (Linear)      | 69 | 69 | 97 | 27 | 81 | 4 |
+| Support Vector Machine (Poly)        | 70 | 70 | 96 | 32 | 81 | 3 |
+| Support Vector Machine (Sigmoid)     | 55 | 65 | 69 | 68 | 67 | 11|
+| Decision Tree (DT)                   | 68 | 68 | 99 | 21 | 81 | 5 |
+| Naive Bayes Classifier (NBC)         | 66 | 66 | 99 | 62 | 79 | 8 |
+| Random Forest (RF)                   | 71 | 72 | 90 | 37 | 80 | 6 |
+| XGboost Classifier (XGB)             | 72 | 72 | 93 | 34 | 81 | 1 |
+
+
+Which from the selection. The model with the predicted result received the F1-Score. The model with the highest F1-Score was XGBoost, Decision Tree, SVM (Gaussian), SVM (Linear), and SVM (Poly) had an F1-Score percentage. Then look at Accuracy. The result is XGBoost. Accuracy is 71%. Then look at Precision. It is XGBoost. Precision is 72%. The most suitable model for this prediction is XGBoost, which descends in descending order based on rank.
+
+
+
+Next, when analyzing which variables affect our model, we select from feature importance, which indicates which variable affects our model by selecting feature importance from the XGBoost model.
+
+
+**Figure 7**
+
+<p align="center">
+ 
+
+  <img  width="800"  src="https://user-images.githubusercontent.com/63940535/132390750-82ff74d0-b31b-4f9e-909d-2f965760c3bd.png">
+  
+</p>
+
+
+The variables that affect our model are PAYMENT_METHOD After that, when knowing which variable has importance and what is the Partial Dependence Plot (PDP), which is a method used to find the marginal effect of each feature that affects the model output (probability in the case of classification), which can see which features are more or less effective And how do the features correlate with the model's predictive results? According to the example in Figure 8,
+
+
+
+**Figure 8**
+
+<p align="center">
+ 
+
+  <img  height="300" width="400"  src="https://user-images.githubusercontent.com/63940535/132391044-79ebe969-6cc1-4f12-8e0f-679441344f73.png">
+  <img  height="300" width="400"  src="https://user-images.githubusercontent.com/63940535/132391102-7459ee7f-8398-4d18-b89d-7610553ee68d.png">
+  
+</p>
+
+
+From Figure 8, it shows that when this variable PAYMENT_METHOD_is_PureDD has a value of 0, it will result in Resiliated, meaning that if the customer chooses not to pay by PureDD method, it will increase the chances of renewing the policy. When a customer pays a legal fee before renewal, they are more likely to renew their policy.
+
+
+## IV.Conclusion & Discussion
+
+From a study on the prediction of whether or not to cancel or renew a home insurance policy. Each model was used to see how accurate the prediction was.
+
+The results of the analysis can be concluded that the ideal model for this dataset was XGBoost, looking at F1-Score, accuracy, precision, recall, and specificity, respectively. The prediction was 81 percent F1-Score, 71% Accuracy, 72% Precision, Recal 93 percent and Specificity 34 percent.
+
+Usually the F1-Score or Accuracy should be greater than 90%, but the analyst's prediction was 81 percent F1-Score and 71 percent Accuracy, which is much less than the expected value. Based on the data obtained prior to the clean data, the Resiliated value (20.51 percent) was lower than that. Resiliated means that the data has an imbalance, and when cleaned, the data that may actually be usable is only 10 percent of the original value. The resulting value is therefore 33.81% and the non-resilient is 66.19 percent, with imbalances occurring anyway, and some features have inconsistent data collection and a lot of gaps. This may cause the subject to be less accurate.
+
+A previous study (Kaggle.com) suggested using the Decision Tree to make predictions, but looking at the previous study's decision tree, it didn't predict Resiliated at all, whereas the Analyzers' decision tree yielded only 68% Accuracy. Only, however, the Analyst's Decision tree model was predicted to be resiliated, meaning the Analyst's model was very effective. But when compared to the accuracy of the XGBoost, there is a 3% difference in accuracy, which is not much difference, but taking the parameters into account makes the XGBoost better.
+
+As for the variables that most affect the model XGBoost are PAYMENT_METHOD_is_PUREDD, followed by LEGAL_ADDON_PRE_RENT, respectively, meaning that when customers choose not to pay by the PureDD method, they will have more chances to renew the policy, and when customers who pay legal fees before renewal are more likely to renew their policy contracts, for example.
+
+
+## V.References
+
+**BUNDLE & UNBUNDLE PRICING**
+
+[1] forbes,*How AI And Machine Learning Are Used To Transform The Insurance Industry*,strategic business & technology advisor to governments and companies. [Online] Available: [forbes](https://www.forbes.com/sites/bernardmarr/2017/10/24/how-ai-and-machine-learning-are-used-to-transform-the-insurance-industry/#2e8b3a7913a1)
+
+[2] lifeant,*What Happens When A Life Insurance Policy Lapses* ,Life Ant was started by Thomas Rockford in January 2014, with the goal of fitting each of our educated clients with the lowest-cost life insurance policy. [Online]Available: [lifeant](https://www.lifeant.com/happens-life-insurance-policy-lapses/)
+
+[3] kaggle,*Home insurance in R*,Yabir Canario. [Online]Available: [kaggle](https://www.kaggle.com/ycanario/home-insurance-in-r)
 
